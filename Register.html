@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+    <link rel="stylesheet" href="app.css" />
+  </head>
+
+  <body>
+    <ul>
+      <li><a class="active" href="Register.html">Register</a></li>
+      <li><a href="Dashboard.html">Dashboard</a></li>
+      <li><a href="Vaccinated.html">Vaccinated</a></li>
+    </ul>
+    <div>
+      <h2>Registration page</h2>
+      <form action="#">
+        <div>
+          <label for="id">ID:</label>
+          <input id="id" placeholder="Enter ID" name="id" />
+        </div>
+
+        <div>
+          <label for="name">Name:</label>
+          <input
+            type="text"
+            required
+            minlength="4"
+            id="name"
+            placeholder="Enter email"
+            name="email"
+          />
+        </div>
+        <div>
+          <label for="age">Age:</label>
+          <input
+            type="number"
+            placeholder="Age"
+            id="age"
+            min="18"
+            max="40"
+          />
+        </div>
+
+        <div>
+          <label>Designation :</label>
+          <input type="radio" name="employee" id="employee" />
+          <label for="employee">Employee</label>
+
+          <input type="radio" name="student" id="student" />
+          <label for="student">Student</label>
+        </div>
+
+        <div>
+          <label for="priority">Priority :</label>
+          <select name="priority" id="priority">
+            <option>p3</option>
+            <option>p2</option>
+            <option>p1</option>
+            <option>p0</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="vaccine">Choose Vaccine:</label>
+          <select required name="vaccine" id="vaccine">
+            <option value="" selected disabled>Choose Vaccine</option>
+            <option>Covishield</option>
+            <option>Covaxin</option>
+            <option>Sputnik</option>
+          </select>
+        </div>
+        <button type="button" onclick="saveData()" id="save_btn">Submit</button>
+      </form>
+    </div>
+  </body>
+  <script>
+    showData();
+    function saveData() {
+      let id, name, age, designation, priority, vaccine;
+      id = document.getElementById("id").value;
+      name = document.getElementById("name").value;
+      age = document.getElementById("age").value;
+      designationEmployee = document.getElementById("employee").value;
+      designationStudent = document.getElementById("student").value;
+      priority = document.getElementById("priority").value;
+      vaccine = document.getElementById("vaccine").value;
+
+      let user_records = new Array();
+      user_records = JSON.parse(localStorage.getItem("users"))
+        ? JSON.parse(localStorage.getItem("users"))
+        : [];
+      if (
+        user_records.some((v) => {
+          return v.id == id;
+        })
+      ) {
+        alert("duplicate data");
+      } else {
+        user_records.push({
+          id: id,
+          name: name,
+          age: age,
+          designationEmployee: designationEmployee,
+          designationStudent: designationStudent,
+          priority: priority,
+          vaccine: vaccine,
+        });
+        localStorage.setItem("users", JSON.stringify(user_records));
+      }
+     
+    }
+  </script>
+</html>
